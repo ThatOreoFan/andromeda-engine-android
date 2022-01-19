@@ -851,6 +851,29 @@ class PlayState extends MusicBeatState
 		ratingCountersUI.cameras = [camHUD];
 		doof.cameras = [camHUD];
 
+		#if mobileC
+			mcontrols = new Mobilecontrols();
+			switch (mcontrols.mode)
+			{
+				case VIRTUALPAD_RIGHT | VIRTUALPAD_LEFT | VIRTUALPAD_CUSTOM:
+					controls.setVirtualPad(mcontrols._virtualPad, FULL, NONE);
+				case HITBOX:
+					controls.setHitBox(mcontrols._hitbox);
+				default:
+			}
+			trackedinputs = controls.trackedinputs;
+			controls.trackedinputs = [];
+
+			var camcontrol = new FlxCamera();
+			FlxG.cameras.add(camcontrol);
+			camcontrol.bgColor.alpha = 0;
+			mcontrols.cameras = [camcontrol];
+
+			//mcontrols.visible = false;
+			mcontrols.alpha = 0;
+
+			add(mcontrols);
+		#end
 
 		var centerP = new FlxSprite(0,0);
 		centerP.screenCenter(XY);
